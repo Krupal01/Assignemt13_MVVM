@@ -64,15 +64,15 @@ public class MainPagingAdapter extends PagingDataAdapter<HitsItem,MainPagingAdap
         }
 
         public void bind(HitsItem hitsItem , MainViewModel viewModel,ItemLongClickListener listener){
-            tvItemMain_CreatedAt.setText(hitsItem.getCreatedAt());
+            tvItemMain_CreatedAt.setText(hitsItem.getAuthor());
             tvItemMain_Title.setText(hitsItem.getTitle());
             swItemMain_Status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked && viewModel.SELECTED_ITEMS.getValue()!=null){
-                        viewModel.SELECTED_ITEMS.setValue(viewModel.SELECTED_ITEMS.getValue()+1);
+                    if (isChecked && viewModel.ACTIVATED_ITEMS.getValue()!=null){
+                        viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()+1);
                     }else {
-                        viewModel.SELECTED_ITEMS.setValue(viewModel.SELECTED_ITEMS.getValue()-1);
+                        viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()-1);
                     }
                 }
             });

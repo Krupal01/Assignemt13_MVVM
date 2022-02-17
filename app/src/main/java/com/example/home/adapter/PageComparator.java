@@ -14,6 +14,6 @@ public class PageComparator extends DiffUtil.ItemCallback<HitsItem> {
 
     @Override
     public boolean areContentsTheSame(@NonNull HitsItem oldItem, @NonNull HitsItem newItem) {
-        return oldItem.getTitle().equals(newItem.getTitle());
+        return oldItem.isEqual(newItem);
     }
 }

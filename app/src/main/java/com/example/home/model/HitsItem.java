@@ -83,4 +83,12 @@ public class HitsItem{
 	public String getObjectID(){
 		return objectID;
 	}
+
+	public boolean isEqual(HitsItem item){
+		return author.equals(item.getAuthor()) &&
+				createdAt.equals(item.getCreatedAt()) &&
+				title.equals(item.getTitle()) &&
+				url.equals(item.getUrl()) &&
+				objectID.equals(item.getObjectID());
+	}
 }

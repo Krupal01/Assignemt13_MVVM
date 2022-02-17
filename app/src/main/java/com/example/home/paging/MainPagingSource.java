@@ -19,6 +19,25 @@ public class MainPagingSource extends RxPagingSource<Integer , HitsItem> {
     @Nullable
     @Override
     public Integer getRefreshKey(@NonNull PagingState<Integer, HitsItem> pagingState) {
+        Integer anchorPosition = pagingState.getAnchorPosition();
+        if (anchorPosition == null) {
+            return null;
+        }
+
+        LoadResult.Page<Integer, HitsItem> anchorPage = pagingState.closestPageToPosition(anchorPosition);
+        if (anchorPage == null) {
+            return null;
+        }
+
+        Integer prevKey = anchorPage.getPrevKey();
+        if (prevKey != null) {
+            return prevKey + 1;
+        }
+
+        Integer nextKey = anchorPage.getNextKey();
+        if (nextKey != null) {
+            return nextKey - 1;
+        }
         return pagingState.getAnchorPosition();
     }
 
@@ -43,6 +62,8 @@ public class MainPagingSource extends RxPagingSource<Integer , HitsItem> {
     private LoadResult<Integer , HitsItem> toLoadResult(List<HitsItem> hitsItems, int pageNumber) {
         return new LoadResult.Page(hitsItems,
                 pageNumber == 1?null:pageNumber-1,
-                pageNumber == 50?null:pageNumber+1);
+                pageNumber == 50?null:pageNumber+1,
+                LoadResult.Page.COUNT_UNDEFINED,
+                LoadResult.Page.COUNT_UNDEFINED);
     }
 }

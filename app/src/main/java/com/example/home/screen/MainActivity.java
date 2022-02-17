@@ -78,11 +78,11 @@ public class MainActivity extends AppCompatActivity implements MainPagingAdapter
         if(!v.isSelected()){
             v.setSelected(true);
             v.setBackground(getResources().getDrawable(R.drawable.item_main));
-            viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()+1);
+            viewModel.SELECTED_ITEMS.setValue(viewModel.SELECTED_ITEMS.getValue()+1);
         }else {
             v.setSelected(false);
             v.setBackgroundResource(0);
-            viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()-1);
+            viewModel.SELECTED_ITEMS.setValue(viewModel.SELECTED_ITEMS.getValue()-1);
         }
 
     }
