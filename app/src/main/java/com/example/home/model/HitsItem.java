@@ -1,23 +1,56 @@
 package com.example.home.model;
 
 import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 public class HitsItem{
+
+	@SerializedName("comment_text")
 	private Object commentText;
+
+	@SerializedName("story_text")
 	private Object storyText;
+
+	@SerializedName("author")
 	private String author;
+
+	@SerializedName("story_id")
 	private Object storyId;
+
+	@SerializedName("_tags")
 	private List<String> tags;
+
+	@SerializedName("created_at")
 	private String createdAt;
+
+	@SerializedName("created_at_i")
 	private int createdAtI;
+
+	@SerializedName("title")
 	private String title;
+
+	@SerializedName("url")
 	private String url;
+
+	@SerializedName("points")
 	private int points;
+
+	@SerializedName("_highlightResult")
 	private HighlightResult highlightResult;
+
+	@SerializedName("num_comments")
 	private int numComments;
+
+	@SerializedName("story_title")
 	private Object storyTitle;
+
+	@SerializedName("parent_id")
 	private Object parentId;
+
+	@SerializedName("story_url")
 	private Object storyUrl;
+
+	@SerializedName("objectID")
 	private String objectID;
 
 	public Object getCommentText(){
@@ -85,10 +118,8 @@ public class HitsItem{
 	}
 
 	public boolean isEqual(HitsItem item){
-		return author.equals(item.getAuthor()) &&
-				createdAt.equals(item.getCreatedAt()) &&
-				title.equals(item.getTitle()) &&
-				url.equals(item.getUrl()) &&
-				objectID.equals(item.getObjectID());
+		return author.equals(item.author) &&
+				createdAt.equals(item.createdAt) &&
+				title.equals(item.title);
 	}
 }

@@ -1,6 +1,5 @@
 package com.example.home.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +7,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.DiffUtil;
@@ -16,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.home.R;
 import com.example.home.model.HitsItem;
-import com.example.home.model.Page;
-import com.example.home.screen.MainActivity;
 import com.example.home.viewmodel.MainViewModel;
 
 import java.util.Objects;
@@ -64,7 +60,7 @@ public class MainPagingAdapter extends PagingDataAdapter<HitsItem,MainPagingAdap
         }
 
         public void bind(HitsItem hitsItem , MainViewModel viewModel,ItemLongClickListener listener){
-            tvItemMain_CreatedAt.setText(hitsItem.getAuthor());
+            tvItemMain_CreatedAt.setText(hitsItem.getCreatedAt());
             tvItemMain_Title.setText(hitsItem.getTitle());
             swItemMain_Status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

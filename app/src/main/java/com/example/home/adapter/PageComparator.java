@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.example.home.model.HitsItem;
-import com.example.home.model.Page;
 
 public class PageComparator extends DiffUtil.ItemCallback<HitsItem> {
     @Override
