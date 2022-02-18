@@ -122,4 +122,5 @@ public class HitsItem{
 				createdAt.equals(item.createdAt) &&
 				title.equals(item.title);
 	}
+
 }

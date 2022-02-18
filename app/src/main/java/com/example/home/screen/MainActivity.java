@@ -22,6 +22,7 @@ import com.example.home.databinding.ActivityMainBinding;
 import com.example.home.model.HitsItem;
 import com.example.home.viewmodel.MainViewModel;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import kotlin.Unit;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainPagingAdapter
         setContentView(binding.getRoot());
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        adapter = new MainPagingAdapter(new PageComparator(),viewModel,this);
+        adapter = new MainPagingAdapter(new PageComparator(),viewModel,this , getApplicationContext());
 
         viewModel.pagingDataFlowable.subscribe(hitsItemPagingData -> {
             adapter.submitData(getLifecycle(),hitsItemPagingData);
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MainPagingAdapter
 
         binding.rcvMain.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         binding.rcvMain.setAdapter(adapter);
+
 
         binding.getRoot().setOnRefreshListener(() -> {
             viewModel.init();
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements MainPagingAdapter
                     if (!(loadStates.getRefresh() instanceof LoadState.Loading)) {
                         binding.rcvMain.setAdapter(adapter);
                         adapter.removeLoadStateListener(this);
+//                        viewModel.SELECTED_ITEMS.setValue(0);
+//                        viewModel.ACTIVATED_ITEMS.setValue(0);
                     }
                     return null;
                 }
@@ -96,18 +100,15 @@ public class MainActivity extends AppCompatActivity implements MainPagingAdapter
     @Override
     public void onLongClick(HitsItem item, View v) {
 
-        if(!v.isSelected()){
-            v.setSelected(true);
+        if(!(viewModel.SELECTED_DATA.contains(item.getTitle()))){
             v.setBackground(getResources().getDrawable(R.drawable.item_main));
             viewModel.SELECTED_ITEMS.setValue(viewModel.SELECTED_ITEMS.getValue()+1);
+            viewModel.SELECTED_DATA.add(item.getTitle());
         }else {
-            v.setSelected(false);
             v.setBackgroundResource(0);
             viewModel.SELECTED_ITEMS.setValue(viewModel.SELECTED_ITEMS.getValue()-1);
+            viewModel.SELECTED_DATA.remove(item.getTitle());
         }
 
     }
-
-
-
 }

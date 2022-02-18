@@ -1,5 +1,7 @@
 package com.example.home.adapter;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +23,18 @@ import java.util.Objects;
 public class MainPagingAdapter extends PagingDataAdapter<HitsItem,MainPagingAdapter.MyViewHolder> {
 
     private MainViewModel viewModel;
+    private Context context;
 
     public interface ItemLongClickListener{
         public void onLongClick(HitsItem item , View v);
     }
     private ItemLongClickListener listener;
 
-    public MainPagingAdapter(@NonNull DiffUtil.ItemCallback<HitsItem> diffCallback,MainViewModel viewModel , ItemLongClickListener listener) {
+    public MainPagingAdapter(@NonNull DiffUtil.ItemCallback<HitsItem> diffCallback, MainViewModel viewModel, ItemLongClickListener listener , Context context) {
         super(diffCallback);
         this.viewModel = viewModel;
         this.listener = listener;
+        this.context = context;
     }
 
     @NonNull
@@ -42,11 +46,22 @@ public class MainPagingAdapter extends PagingDataAdapter<HitsItem,MainPagingAdap
 
     @Override
     public void onBindViewHolder(@NonNull MainPagingAdapter.MyViewHolder holder, int position) {
+        holder.swItemMain_Status.setOnCheckedChangeListener(null);
+        if ((viewModel.SELECTED_DATA.contains(getItem(position).getTitle()))){
+            holder.itemView.setBackground(context.getResources().getDrawable(R.drawable.item_main));
+        }else {
+            holder.itemView.setBackgroundResource(0);
+        }
+        if ((viewModel.ACTIVATED_DATA.contains(getItem(position).getTitle()))){
+            holder.swItemMain_Status.setChecked(true);
+        }else {
+            holder.swItemMain_Status.setChecked(false);
+        }
         holder.bind(Objects.requireNonNull(getItem(position)),viewModel,listener);
 
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView tvItemMain_CreatedAt;
         private TextView tvItemMain_Title;
         private SwitchCompat swItemMain_Status;
@@ -62,14 +77,13 @@ public class MainPagingAdapter extends PagingDataAdapter<HitsItem,MainPagingAdap
         public void bind(HitsItem hitsItem , MainViewModel viewModel,ItemLongClickListener listener){
             tvItemMain_CreatedAt.setText(hitsItem.getCreatedAt());
             tvItemMain_Title.setText(hitsItem.getTitle());
-            swItemMain_Status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked && viewModel.ACTIVATED_ITEMS.getValue()!=null){
-                        viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()+1);
-                    }else {
-                        viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()-1);
-                    }
+            swItemMain_Status.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked && viewModel.ACTIVATED_ITEMS.getValue()!=null){
+                    viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()+1);
+                    viewModel.ACTIVATED_DATA.add(hitsItem.getTitle());
+                }else {
+                    viewModel.ACTIVATED_ITEMS.setValue(viewModel.ACTIVATED_ITEMS.getValue()-1);
+                    viewModel.ACTIVATED_DATA.remove(hitsItem.getTitle());
                 }
             });
 
