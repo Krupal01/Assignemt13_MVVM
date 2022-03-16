@@ -1,5 +1,6 @@
 package com.example.home.screen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -10,9 +11,11 @@ import androidx.paging.PagingSource;
 import androidx.paging.rxjava3.RxPagingSource;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.home.R;
@@ -96,6 +99,16 @@ public class MainActivity extends AppCompatActivity implements MainPagingAdapter
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.menuSaved){
+            Intent intent = new Intent(this,SaveDataActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onLongClick(HitsItem item, View v) {

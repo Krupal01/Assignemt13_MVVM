@@ -2,4 +2,6 @@
     <string name="app_name">Home</string>
     <string name="selected">Selected:</string>
     <string name="activated">Activated :</string>
+    <string name="save">save</string>
+    <string name="saved">Saved</string>
 </resources>

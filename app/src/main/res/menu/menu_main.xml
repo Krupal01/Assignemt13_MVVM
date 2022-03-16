@@ -9,4 +9,7 @@
         android:title="@string/activated"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/menuSaved"
+        android:title="@string/save"/>
+
 </menu>

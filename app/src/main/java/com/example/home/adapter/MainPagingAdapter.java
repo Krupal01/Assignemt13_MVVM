@@ -5,8 +5,10 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.home.R;
+import com.example.home.db.HitsItemDatabase;
 import com.example.home.model.HitsItem;
 import com.example.home.viewmodel.MainViewModel;
 
@@ -65,11 +68,13 @@ public class MainPagingAdapter extends PagingDataAdapter<HitsItem,MainPagingAdap
         private TextView tvItemMain_CreatedAt;
         private TextView tvItemMain_Title;
         private SwitchCompat swItemMain_Status;
+        private Button itemSavebtn;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvItemMain_CreatedAt = itemView.findViewById(R.id.tvItemMain_CreatedAt);
             tvItemMain_Title = itemView.findViewById(R.id.tvItemMain_Title);
             swItemMain_Status = itemView.findViewById(R.id.swItemMain_Status);
+            itemSavebtn = itemView.findViewById(R.id.itemSaveBtn);
 
             swItemMain_Status.setChecked(false);
         }
@@ -92,6 +97,16 @@ public class MainPagingAdapter extends PagingDataAdapter<HitsItem,MainPagingAdap
                 public boolean onLongClick(View v) {
                     listener.onLongClick(hitsItem,v);
                     return false;
+                }
+            });
+
+            itemSavebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HitsItemDatabase db = HitsItemDatabase.getDatabaseInstance(v.getContext());
+                    db.getHitsItemDao().addHitsItem(hitsItem);
+                    Toast.makeText(v.getContext(),"add Successful",Toast.LENGTH_LONG).show();
+
                 }
             });
         }
