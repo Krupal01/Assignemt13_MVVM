@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.assignment13_mvvm_kotlin.viewmodel.MainViewModel" />
+        <variable
+            name="HitsItem"
+            type="com.example.assignment13_mvvm_kotlin.model.HitsItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvItemMain_Title"
+                    style="@style/MainItem_TextView"
+                    android:layout_weight="3"
+                    android:lines="1"
+                    android:textSize="20sp"
+                    android:layout_width="0dp"
+                    android:text="@{HitsItem.title}"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@{viewModel.SELECTED_DATA.contains(HitsItem.title)}"
+                    android:id="@+id/swItemMain_Status"
+                    android:onCheckedChanged="@{(btn,bool) -> viewModel.selectHits(bool,HitsItem.title)}"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/MainItem_TextView"
+                android:lines="1"
+                android:textSize="15sp"
+                android:id="@+id/tvItemMain_CreatedAt"
+                android:text="@{HitsItem.createdAt}"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/itemSaveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                app:cornerRadius="20dp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

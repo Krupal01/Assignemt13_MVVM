@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="HitsItem"
+            type="com.example.assignment13_mvvm_kotlin.model.HitsItem" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/MainItem_TextView"
+                android:lines="1"
+                android:textSize="20sp"
+                android:id="@+id/tvSave_title"
+                android:text="@{HitsItem.title}"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/MainItem_TextView"
+                android:lines="1"
+                android:textSize="15sp"
+                android:id="@+id/tvSave_createdAt"
+                android:text="@{HitsItem.createdAt}"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
